@@ -1,0 +1,7 @@
+--Finding a column by special word
+
+SELECT col.name, tab.name AS Table_Name
+FROM sys.columns col
+INNER JOIN sys.tables tab
+  ON tab.object_id = col.object_id
+WHERE col.name = 'Currency';
