@@ -5,3 +5,21 @@ FROM sys.columns col
 INNER JOIN sys.tables tab
   ON tab.object_id = col.object_id
 WHERE col.name = 'Currency';
+
+--Convert yyyy-mm-dd to mmyyyy by limited right like select
+
+SELECT FORMAT(CONVERT(DATE, B.period, 23), 'yyyyMM') AS Period,B.Version, O.Code, COA.Code, B.TypesOfMovement,B.RegulatedAmount  
+FROM map_Balances AS B
+  LEFT JOIN [BW].[dbo].[map_Organizations] AS O
+  ON B.Company = O.Id
+  LEFT JOIN map_TypesOfMovements AS TOM
+  ON B.TypesOfMovement = TOM.Id
+  LEFT JOIN map_ChartOfAccounts AS COA
+  ON B.Account = COA.Id
+WHERE B.Company IN (30,15,19,16,6,11,25,23,21,196,12,10,2,89)
+
+--Replace dots 
+SELECT Replace(Code,'.', '') AS updated_column
+FROM map_Organizations
+
+
